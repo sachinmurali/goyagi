@@ -10,8 +10,10 @@ import (
 	"github.com/lob/logger-go"
 	"github.com/sachinmurali/goyagi/pkg/application"
 	"github.com/sachinmurali/goyagi/pkg/binder"
+	"github.com/sachinmurali/goyagi/pkg/errors"
 	"github.com/sachinmurali/goyagi/pkg/health"
 	"github.com/sachinmurali/goyagi/pkg/movies"
+	"github.com/sachinmurali/goyagi/pkg/recovery"
 	"github.com/sachinmurali/goyagi/pkg/signals"
 )
 
@@ -21,6 +23,9 @@ func New(app application.App) *http.Server {
 
 	e := echo.New()
 	e.Use(logger.Middleware())
+	e.Use(recovery.Middleware())
+
+	errors.RegisterErrorHandler(e, app)
 
 	b := binder.New()
 	e.Binder = b

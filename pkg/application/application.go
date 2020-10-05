@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sachinmurali/goyagi/pkg/config"
 	"github.com/sachinmurali/goyagi/pkg/database"
+	"github.com/sachinmurali/goyagi/pkg/sentry"
 )
 
 // App contains necessary references that will be persisted throughout the
@@ -13,6 +14,7 @@ import (
 type App struct {
 	Config config.Config
 	DB     *pg.DB
+	Sentry sentry.Sentry
 }
 
 // New creates a new instance of App
@@ -24,5 +26,10 @@ func New() (App, error) {
 		return App{}, errors.Wrap(err, "application")
 	}
 
-	return App{cfg, db}, nil
+	sentry, err := sentry.New(cfg)
+	if err != nil {
+		return App{}, errors.Wrap(err, "application")
+	}
+
+	return App{cfg, db, sentry}, nil
 }
