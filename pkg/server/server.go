@@ -20,6 +20,7 @@ func New(app application.App) *http.Server {
 	log := logger.New()
 
 	e := echo.New()
+	e.Use(logger.Middleware())
 
 	b := binder.New()
 	e.Binder = b
