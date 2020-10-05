@@ -10,6 +10,7 @@ import (
 	"github.com/lob/logger-go"
 	"github.com/sachinmurali/goyagi/pkg/application"
 	"github.com/sachinmurali/goyagi/pkg/health"
+	"github.com/sachinmurali/goyagi/pkg/movies"
 	"github.com/sachinmurali/goyagi/pkg/signals"
 )
 
@@ -20,6 +21,7 @@ func New(app application.App) *http.Server {
 	e := echo.New()
 
 	health.RegisterRoutes(e)
+	movies.RegisterRoutes(e, app)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.Config.Port),
