@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:4f726c47cabd8cf517114ff99d0bc16d23ae4e1cfe50c94986c57d90fc66a941"
+  name = "github.com/DataDog/datadog-go"
+  packages = ["statsd"]
+  pruneopts = "UT"
+  revision = "b5f99e5a502785e43356d1f710e8ae1ee948503b"
+  version = "v4.0.0"
+
+[[projects]]
   digest = "1:43f75a87077db1adcec941cf562c78435a7703024fe991d6b2420b26d5c83f14"
   name = "github.com/certifi/gocertifi"
   packages = ["."]
@@ -309,6 +317,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/DataDog/datadog-go/statsd",
     "github.com/creasty/defaults",
     "github.com/getsentry/raven-go",
     "github.com/go-pg/pg",

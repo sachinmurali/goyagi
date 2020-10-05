@@ -51,8 +51,6 @@ func (h *handler) retrieveHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, movie)
 }
 
-// pkg/movies/handlers.go
-
 func (h *handler) createHandler(c echo.Context) error {
 	// params is a struct that will have our payload bound and validated against
 	params := createParams{}
@@ -66,10 +64,13 @@ func (h *handler) createHandler(c echo.Context) error {
 		ReleaseDate: params.ReleaseDate,
 	}
 
+	insertTimer := h.app.Metrics.NewTimer("goyagi.movies.create.db")
 	_, err := h.app.DB.Model(&movie).Insert()
 	if err != nil {
+		insertTimer.End("result:error")
 		return err
 	}
+	insertTimer.End("result:success")
 
 	return c.JSON(http.StatusOK, movie)
 }
